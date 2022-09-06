@@ -3,14 +3,15 @@ const desktopMenu = document.querySelector('.desktop-menu');
 const MenuHam = document.querySelector('.menu');
 const MobileMenu = document.querySelector('.mobile-menu');
 const carOfBuys = document.querySelector('.car');
+const DetailOpenProduct = document.querySelector('#producto-info');
+const CloseProductDetail = document.querySelector('.product-detail-close');
 const CARDSCONTAINER = document.querySelector('.cards-container')
 const aside = document.querySelector('.product-detail'); 
 
 email.addEventListener('click', toggleDektopMenu);
 MenuHam.addEventListener('click', toggleMenuMobile);
 carOfBuys.addEventListener('click', toggleAsideMenu);
-
-
+CloseProductDetail.addEventListener('click', closeProductInfo);
 
 function toggleDektopMenu () {
   const IsAsideClosed = aside.classList.contains('inactive');
@@ -23,14 +24,30 @@ function toggleDektopMenu () {
 
 function toggleMenuMobile () {
   const IsAsideOpen = !aside.classList.contains('inactive');
-  
+  const IsImageProductDetailOpen = !DetailOpenProduct.classList.contains('inactive')
   if (IsAsideOpen) {
     aside.classList.add('inactive');
+  } else if (IsImageProductDetailOpen) {
+    DetailOpenProduct.classList.add('inactive');
   }
   MobileMenu.classList.toggle('inactive');
 }
+function openProductDetail() {
+  const IsAsideOpen = !aside.classList.contains('inactive');
+
+  if (IsAsideOpen) {
+    aside.classList.add('inactive');
+}
+DetailOpenProduct.classList.remove('inactive')
+}
+
+function closeProductInfo() {
+  DetailOpenProduct.classList.add('inactive');
+}
+
 
 function toggleAsideMenu () {
+  const IsImageProductDetailOpen = !DetailOpenProduct.classList.contains('inactive');
   const IsMenuMobileOpen = !MobileMenu.classList.contains('inactive');
   const IsDesktopOpen = !desktopMenu.classList.contains('inactive');
 
@@ -38,6 +55,8 @@ function toggleAsideMenu () {
     MobileMenu.classList.add('inactive');
   } else if (IsDesktopOpen) {
     desktopMenu.classList.add('inactive');
+  } else if (IsImageProductDetailOpen) {
+    DetailOpenProduct.classList.add('inactive');
   }
   aside.classList.toggle('inactive');
 }
@@ -81,6 +100,7 @@ function functionLists(arr) {
   
     const img = document.createElement('img');
     img.setAttribute('src', iterator.Image);
+    img.addEventListener('click', openProductDetail)
   
     const divProductInfo = document.createElement('div');
     divProductInfo.classList.add('product-info');
